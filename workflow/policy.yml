@@ -11,7 +11,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Run Prerequisites
-      run: .\connect-azure.ps1 -ConnectAzure -ServicePrincipalPass ${{secrets.SPPASS}} -ServicePrincipalName ${{secrets.SPNAME}} -SubscriptionId ${{secrets.SUBSCRIPTIONID}} -TenantId ${{secrets.TENANTID}} -Verbose
+      run: .\connect-azure.ps1 -spPass ${{secrets.SPPASS}} -spName ${{secrets.SPNAME}} -SubscriptionId ${{secrets.SUBSCRIPTIONID}} -TenantId ${{secrets.TENANTID}} -Verbose
       shell: pwsh
       - name: Deploy Policies
       run: New-AzDeployment -Location "West Europe" -TemplateFile '.\policy.bicep'
