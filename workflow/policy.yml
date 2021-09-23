@@ -1,0 +1,25 @@
+name: testPolicies
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  Policies:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Run Prerequisites
+      run: .\connect-azure.ps1 -ConnectAzure -ServicePrincipalPass ${{secrets.SPPASS}} -ServicePrincipalName ${{secrets.SPNAME}} -SubscriptionId ${{secrets.SUBSCRIPTIONID}} -TenantId ${{secrets.TENANTID}} -Verbose
+      shell: pwsh
+      - name: Deploy Policies
+      run: New-AzDeployment -Location "West Europe" -TemplateFile '.\policy.bicep'
+      shell: pwsh
+      - name: Run Pester tests (pwsh)
+        run: |
+          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+          Set-PSRepository psgallery -InstallationPolicy trusted
+          Install-Module -Name Pester -RequiredVersion 5.0.4 -confirm:$false -Force
+          Invoke-Pester -Path "./tests"
+        shell: pwsh
