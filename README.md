@@ -1,0 +1,1 @@
+# azurepolicy_Bicep
