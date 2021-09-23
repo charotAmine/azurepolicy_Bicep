@@ -2,7 +2,7 @@ describe 'Deploy a public storage' {
     it 'Not be deployed' {
         write-output "Starting test : "
         $output = New-AzDeployment -Location "West Europe" -TemplateFile "$($PSScriptRoot)/bicepFiles/main.bicep" -errorAction continue 2>&1
-        $policyName = "storage-vnet-required-1"
+        $policyName = "storage-1-10-100"
         "$output" -like "*$policyName*" | Should -Be $true
     }
 }
