@@ -11,11 +11,11 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Run Prerequisites
-      run: .\connect-azure.ps1 -spPass ${{secrets.SPPASS}} -spName ${{secrets.SPNAME}} -SubscriptionId ${{secrets.SUBSCRIPTIONID}} -TenantId ${{secrets.TENANTID}} -Verbose
-      shell: pwsh
+        run: .\connect-azure.ps1 -spPass ${{secrets.SPPASS}} -spName ${{secrets.SPNAME}} -SubscriptionId ${{secrets.SUBSCRIPTIONID}} -TenantId ${{secrets.TENANTID}} -Verbose
+        shell: pwsh
       - name: Deploy Policies
-      run: New-AzDeployment -Location "West Europe" -TemplateFile '.\policy.bicep'
-      shell: pwsh
+        run: New-AzDeployment -Location "West Europe" -TemplateFile '.\policy.bicep'
+        shell: pwsh
       - name: Run Pester tests (pwsh)
         run: |
           Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
